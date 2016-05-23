@@ -19,6 +19,7 @@ public class Console implements Runnable
 		this.server = server;
 		Thread thread = new Thread(this, "Console");
 		thread.start();
+		System.out.println("Console ready.");
 	}
 	
 	@Override
@@ -32,11 +33,25 @@ public class Console implements Runnable
 				String read = sysin.readLine();
 				if (read.startsWith("client>server"))
 				{
-					client.sendEncrypted(read.substring(13));
+					if (client.cipher != null)
+					{
+						client.sendEncrypted(read.substring(14));
+					}
+					else
+					{
+						client.send(read.substring(14));
+					}
 				}
 				else if (read.startsWith("server>client"))
 				{
-					server.sendEncrypted(read.substring(13));
+					if (server.cipher != null)
+					{
+						server.sendEncrypted(read.substring(143));
+					}
+					else
+					{
+						server.send(read.substring(14));
+					}
 				}
 				else
 				{

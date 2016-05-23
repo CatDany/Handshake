@@ -2,10 +2,10 @@ package catdany.handshake;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
 import java.io.PrintWriter;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -22,8 +22,8 @@ import catdany.cryptocat.api.CatDecryptor;
 
 public class Server implements Runnable
 {
-	public final PipedInputStream in;
-	public final PipedOutputStream out;
+	public final InputStream in;
+	public final OutputStream out;
 	
 	public final BufferedReader reader;
 	public final PrintWriter writer;
@@ -34,7 +34,7 @@ public class Server implements Runnable
 	public CatDecryptor decryptor;
 	public CatCipher cipher;
 	
-	public Server(PipedInputStream in, PipedOutputStream out) throws NoSuchAlgorithmException, NoSuchPaddingException
+	public Server(InputStream in, OutputStream out) throws NoSuchAlgorithmException, NoSuchPaddingException
 	{
 		this.certLocal = Handshake.serverCert;
 		this.decryptor = new CatDecryptor(certLocal.privateKey, certLocal.algorithmKeys);
